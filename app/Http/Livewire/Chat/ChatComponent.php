@@ -66,10 +66,12 @@ class ChatComponent extends Component
     public function render()
     {
         $chat = Chat::find($this->chat_id);
-        $chatmessages = ChatMessage::where('chats_id', $this->chat_id)->orderBy('created_at')->get();
+        $chatmessages = ChatMessage::where('chats_id', $this->chat_id)->orderBy('created_at', 'desc')->take(50)->get();
+        $sorted = $chatmessages->sortBy('created_at');
+        $sorted->values()->all();
         return view('livewire.chat.chat-component')
             ->with('chat', $chat)
-            ->with('messages', $chatmessages);
+            ->with('messages', $sorted);
     }
 
     public function limpiar()
