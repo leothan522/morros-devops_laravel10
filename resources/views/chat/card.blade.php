@@ -3,7 +3,7 @@
         <h3 class="card-title col-12">
             <span>Chat Directo</span>
             <span class="float-right">
-                <a class="nav-link" wire:click="verMessage" style="cursor: pointer">
+                <a class="nav-link" wire:click="verMessage" data-mensaje_id="{{ $ultimo_mensaje }}" style="cursor: pointer" id="ultimo_mensaje_abrir">
                     <i class="far fa-bell text-sm"></i>
                     @if($count_new > 0)
                         <span class="badge badge-warning navbar-badge font-weight-bold">{{ $count_new }}</span>
@@ -20,8 +20,7 @@
             <div class="direct-chat-msg" id="scroll-to-bottom">
                 <div class="direct-chat-infos clearfix">
                     <span class="direct-chat-name float-left">{{ config('app.name') }}</span>
-                    <span
-                            class="direct-chat-timestamp float-right">{{ verFecha($chat['created_at'], 'd M h:i a') }}</span>
+                    <span class="direct-chat-timestamp float-right">{{ verFecha($chat['created_at'], 'd M h:i a') }}</span>
                 </div>
                 <!-- /.direct-chat-infos -->
                 <img class="direct-chat-img" src="{{ asset('img/logo.png') }}" alt="Message User Image">
@@ -31,8 +30,7 @@
                     @if($chat->tipo == 0)
                         <span class="text-success text-bold">Publico</span>
                     @else
-                        <span
-                                class="text-primary text-bold">Privado</span>
+                        <span class="text-primary text-bold">Privado</span>
                     @endif
                 </div>
                 <!-- /.direct-chat-text -->

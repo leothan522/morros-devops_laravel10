@@ -26,7 +26,7 @@ class ChatComponent extends Component
     protected $listeners = ['bajarScroll', 'refresh', 'verMessage'];
 
     public $chat_id, $chat_tipo, $chat_count, $count_new;
-    public $new_message;
+    public $new_message, $ultimo_mensaje;
     protected $messaging;
     public $modal_nombre, $modal_email, $modal_telefono, $modal_mensajes, $modal_fecha, $modal_imagen;
 
@@ -57,6 +57,9 @@ class ChatComponent extends Component
                 $this->count_new = $this->chat_count - $chatuser['mensajes_vistos'];
             }
         }
+
+        $ultimo = ChatMessage::where('chats_id', $this->chat_id)->orderBy('created_at', 'DESC')->first();
+        $this->ultimo_mensaje = $ultimo->id;
     }
 
 

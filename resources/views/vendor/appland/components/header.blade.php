@@ -38,7 +38,7 @@
                     @endif
                     <li><a class="getstarted scrollto" href="{{ url('/perfil') }}">{{ ucfirst(auth()->user()->name) }}</a></li>
                     @else
-                    <li><a class="getstarted scrollto" href="{{ route('dashboard') }}">Empezar</a></li>
+                    <li><a class="getstarted scrollto" href="{{ route('dashboard') }}">Iniciar Sesión</a></li>
                 @endauth
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>

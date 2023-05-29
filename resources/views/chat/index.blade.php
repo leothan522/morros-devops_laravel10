@@ -20,17 +20,23 @@
 @section('js')
     {{--<script src="../../dist/js/adminlte.min.js"></script>--}}
     <script !src="">
-        Livewire.on('bajarScroll', idMessage =>{
+        Livewire.on('bajarScroll', idMessage => {
             let scrollToBottom = document.querySelector("#scroll-to-bottom");
             let pageBottom = document.querySelector("#page-bottom_" + idMessage);
             pageBottom.scrollIntoView();
         });
-        function refresh()
-        {
+
+        function refresh() {
             Livewire.emit('refresh');
         }
+
         $(document).ready(function () {
-           //setInterval(refresh, 5000);
+            let elemento = document.getElementById('ultimo_mensaje_abrir');
+            let ultimo = elemento.dataset.mensaje_id;
+            let scrollToBottom = document.querySelector("#scroll-to-bottom");
+            let pageBottom = document.querySelector("#page-bottom_" + ultimo);
+            pageBottom.scrollIntoView();
+            setInterval(refresh, 5000);
         });
 
         console.log('Hi!')
