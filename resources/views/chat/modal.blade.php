@@ -24,19 +24,19 @@
                     <div class="card-footer p-0">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <span class="nav-link">
                                     Teléfono <span class="float-right badge bg-primary">{{ $modal_telefono }}</span>
-                                </a>
+                                </span>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <span class="nav-link">
                                     Mesnajes Enviados <span class="float-right badge bg-warning">{{ $modal_mensajes }}</span>
-                                </a>
+                                </span>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <span class="nav-link">
                                     Incorporación <span class="float-right badge bg-success">{{ $modal_fecha }}</span>
-                                </a>
+                                </span>
                             </li>
                             {{--<li class="nav-item">
                                 <a href="#" class="nav-link">
