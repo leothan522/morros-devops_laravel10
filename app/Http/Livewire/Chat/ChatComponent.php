@@ -7,6 +7,7 @@ use App\Models\ChatMessage;
 use App\Models\ChatUser;
 use App\Models\User;
 use App\Services\FirebaseCloudMessagingService;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Kreait\Firebase\Exception\FirebaseException;
@@ -27,6 +28,7 @@ class ChatComponent extends Component
     public $chat_id, $chat_tipo, $chat_count, $count_new;
     public $new_message;
     protected $messaging;
+    public $modal_nombre, $modal_email, $modal_telefono, $modal_mensajes, $modal_fecha;
 
     public function mount()
     {
@@ -143,6 +145,18 @@ class ChatComponent extends Component
         } catch (MessagingException|FirebaseException $e) {
             //mensaje en caso de error
         }
+    }
+
+    public function showModal($id)
+    {
+        $user = User::find($id);
+        $this->modal_nombre = $user->name;
+        $this->modal_email = $user->email;
+        $this->modal_telefono = $user->telefono;
+        $mensajes = ChatMessage::where('chats_id', $this->chat_id)->where('users_id', $user->id)->count();
+        $this->modal_mensajes = $mensajes;
+        $chat = ChatUser::where('chats_id', $this->chat_id)->where('users_id', $user->id)->first();
+        $this->modal_fecha = Carbon::create($chat['created_at'])->diffForHumans();
     }
 
 }
