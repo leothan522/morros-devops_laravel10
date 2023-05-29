@@ -75,12 +75,12 @@ class ChatComponent extends Component
     }
 
     protected $rules = [
-        'new_message' => 'required|min:2'
+        'new_message' => 'required'
     ];
 
     protected $messages = [
         'new_message.required' => 'El campo mensaje es obligatorio.',
-        'new_message.min' => ' El campo mensaje debe contener al menos 4 caracteres.',
+        'new_message.min' => ' El campo mensaje debe contener al menos 1 caracteres.',
     ];
 
     public function save()
