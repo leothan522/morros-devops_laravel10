@@ -88,8 +88,8 @@
     <div class="card-footer" style="display: block;">
         <form wire:submit.prevent="save">
             <div class="input-group">
-                <input type="text" name="message" wire:model.defer="new_message" placeholder="Escriba el mensaje..."
-                       class="form-control">
+                {{--<input type="text" name="message" wire:model.defer="new_message" placeholder="Escriba el mensaje..." class="form-control">--}}
+                <textarea name="message" wire:model.defer="new_message" class="form-control" cols="1" rows="1" placeholder="Escriba el mensaje..."></textarea>
                 <span class="input-group-append">
                       <button type="submit" class="btn btn-primary">
                           Enviar
