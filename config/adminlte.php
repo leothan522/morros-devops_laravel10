@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>SPORTEC</b> TIENDA',
+    'logo' => '<b>MORROS</b> DEVOPS',
     /*'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',*/
     'logo_img' => 'img/logo_small_50x50.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',

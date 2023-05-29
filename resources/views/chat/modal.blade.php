@@ -15,7 +15,7 @@
                     <!-- Add the bg color to the header using any of the bg-* classes -->
                     <div class="widget-user-header bg-primary">
                         <div class="widget-user-image">
-                            <img class="img-circle elevation-2" src="{{ asset('img/user.png') }}" alt="User Avatar">
+                            <img class="img-circle elevation-2" src="{{ verImagen($modal_imagen, true) }}" alt="User Avatar">
                         </div>
                         <!-- /.widget-user-image -->
                         <h4 class="widget-user-username">{{ $modal_nombre }}</h4>

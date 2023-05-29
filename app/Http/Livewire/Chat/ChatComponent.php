@@ -28,7 +28,7 @@ class ChatComponent extends Component
     public $chat_id, $chat_tipo, $chat_count, $count_new;
     public $new_message;
     protected $messaging;
-    public $modal_nombre, $modal_email, $modal_telefono, $modal_mensajes, $modal_fecha;
+    public $modal_nombre, $modal_email, $modal_telefono, $modal_mensajes, $modal_fecha, $modal_imagen;
 
     public function mount()
     {
@@ -153,6 +153,7 @@ class ChatComponent extends Component
         $this->modal_nombre = $user->name;
         $this->modal_email = $user->email;
         $this->modal_telefono = $user->telefono;
+        $this->modal_imagen = $user->profile_photo_path;
         $mensajes = ChatMessage::where('chats_id', $this->chat_id)->where('users_id', $user->id)->count();
         $this->modal_mensajes = $mensajes;
         $chat = ChatUser::where('chats_id', $this->chat_id)->where('users_id', $user->id)->first();
