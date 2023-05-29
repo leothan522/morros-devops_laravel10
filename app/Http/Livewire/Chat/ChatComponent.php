@@ -75,7 +75,7 @@ class ChatComponent extends Component
     }
 
     protected $rules = [
-        'new_message' => 'required|min:4'
+        'new_message' => 'required|min:2'
     ];
 
     protected $messages = [
