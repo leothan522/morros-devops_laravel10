@@ -89,7 +89,7 @@
         <form wire:submit.prevent="save">
             <div class="input-group">
                 {{--<input type="text" name="message" wire:model.defer="new_message" placeholder="Escriba el mensaje..." class="form-control">--}}
-                <textarea name="message" wire:model.defer="new_message" class="form-control" cols="1" rows="1" placeholder="Escriba el mensaje..." id="textarea_message"></textarea>
+                <textarea name="message" wire:model.defer="new_message" class="form-control" cols="1" rows="2" placeholder="Escriba el mensaje..." id="textarea_message"></textarea>
                 <span class="input-group-append">
                       <button type="submit" class="btn btn-primary" id="btn_subtmit_chat">
                           Enviar
