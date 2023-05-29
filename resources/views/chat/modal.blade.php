@@ -18,13 +18,13 @@
                             <img class="img-circle elevation-2" src="{{ asset('img/user.png') }}" alt="User Avatar">
                         </div>
                         <!-- /.widget-user-image -->
-                        <h3 class="widget-user-username">{{ $modal_nombre }}</h3>
-                        <h5 class="widget-user-desc">{{ $modal_email }}</h5>
+                        <h4 class="widget-user-username">{{ $modal_nombre }}</h4>
+                        <h6 class="widget-user-desc">{{ $modal_email }}</h6>
                     </div>
                     <div class="card-footer p-0">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a href="tel:{{ $modal_telefono }}" class="nav-link">
+                                <a href="#" class="nav-link">
                                     Teléfono <span class="float-right badge bg-primary">{{ $modal_telefono }}</span>
                                 </a>
                             </li>
