@@ -39,6 +39,18 @@
             setInterval(refresh, 5000);
         });
 
+        $('#textarea_message').on('keyup keypress', function(e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) {
+                e.preventDefault();
+
+                // Ajax code here
+                $('#btn_subtmit_chat').click();
+
+                return false;
+            }
+        });
+
         console.log('Hi!')
     </script>
 @endsection
