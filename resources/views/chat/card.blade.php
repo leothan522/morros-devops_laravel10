@@ -3,7 +3,8 @@
         <h3 class="card-title col-12">
             <span>Chat Directo</span>
             <span class="float-right">
-                <a class="nav-link" wire:click="verMessage" data-mensaje_id="{{ $ultimo_mensaje }}" style="cursor: pointer" id="ultimo_mensaje_abrir">
+                <a class="nav-link" wire:click="verMessage" data-mensaje_id="{{ $ultimo_mensaje }}" data-coutn_new="{{ $count_new }}"
+                   style="cursor: pointer" id="ultimo_mensaje_abrir">
                     <i class="far fa-bell text-sm"></i>
                     @if($count_new > 0)
                         <span class="badge badge-warning navbar-badge font-weight-bold">{{ $count_new }}</span>
@@ -43,11 +44,15 @@
                      id="page-bottom_{{ $message->id }}">
                     <div class="direct-chat-infos clearfix">
                         <span class="direct-chat-name @if($message->users_id == auth()->id()) float-right @endif">{{ ucwords($message->user->name) }}</span>
-                        <span class="direct-chat-timestamp @if($message->users_id == auth()->id()) float-left @else float-right @endif">{{ verFecha($message->created_at, 'd M h:i a') }}</span>
+                        <span class="direct-chat-timestamp @if($message->users_id == auth()->id()) float-left @else float-right @endif"><span
+                                    class="time"><i
+                                        class="fas fa-clock"></i> {{ haceCuanto($message->created_at) }}</span></span>
                     </div>
                     <!-- /.direct-chat-infos -->
-                    <img class="direct-chat-img" src="{{ verImagen($message->user->profile_photo_path, true) }}" wire:click="showModal({{ $message->users_id }})"
-                         alt="Message User Image" data-toggle="modal" data-target="#exampleModal" style="cursor: pointer;">
+                    <img class="direct-chat-img" src="{{ verImagen($message->user->profile_photo_path, true) }}"
+                         wire:click="showModal({{ $message->users_id }})"
+                         alt="Message User Image" data-toggle="modal" data-target="#exampleModal"
+                         style="cursor: pointer;">
                     <!-- /.direct-chat-img -->
                     <div class="direct-chat-text">
                         {{ $message->message }}
@@ -89,7 +94,8 @@
         <form wire:submit.prevent="save">
             <div class="input-group">
                 {{--<input type="text" name="message" wire:model.defer="new_message" placeholder="Escriba el mensaje..." class="form-control">--}}
-                <textarea name="message" wire:model.defer="new_message" class="form-control" cols="1" rows="2" placeholder="Escriba el mensaje..." id="textarea_message"></textarea>
+                <textarea name="message" wire:model.defer="new_message" class="form-control" cols="1" rows="2"
+                          placeholder="Escriba el mensaje..." id="textarea_message"></textarea>
                 <span class="input-group-append">
                       <button type="submit" class="btn btn-primary" id="btn_subtmit_chat">
                           Enviar

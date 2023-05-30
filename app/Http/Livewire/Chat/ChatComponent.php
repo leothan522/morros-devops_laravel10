@@ -59,7 +59,11 @@ class ChatComponent extends Component
         }
 
         $ultimo = ChatMessage::where('chats_id', $this->chat_id)->orderBy('created_at', 'DESC')->first();
-        $this->ultimo_mensaje = $ultimo->id;
+        if ($this->count_new < 50){
+            $this->ultimo_mensaje = $ultimo->id - $this->count_new;
+        }else{
+            $this->ultimo_mensaje = $ultimo->id - 49;
+        }
     }
 
 
