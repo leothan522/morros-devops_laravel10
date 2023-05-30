@@ -34,9 +34,9 @@
                     <ul>
                         <li><i class="bx bx-chevron-right"></i> <a href="#">Inicio</a></li>
                         <li><i class="bx bx-chevron-right"></i> <a href="#">Sobre nosotros</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Servicios</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="https://ginecobs.morros-devops.xyz/" target="_blank">Sistema GINECOBS</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="https://tienda.morros-devops.xyz/" target="_blank">Sistema TIENDA SPORTEC</a></li>
                         <li><i class="bx bx-chevron-right"></i> <a href="#">Términos de servicio</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Política de privacidad</a></li>
                     </ul>
                 </div>
 

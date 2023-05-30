@@ -3,7 +3,12 @@
 
         <div class="section-title">
             <h2>Contacto</h2>
-            <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+            <p>
+                Para mejorar tu experiencia y la de todos los usuarios, interactúa con nosotros desde nuestra App
+                Android y envía tu opinión. Tus experiencias en esta App contribuyen al desarrollo técnico de nuestros
+                profesiones. También puedes contactarnos por cualquier medio mostrado a continuación, o simplemente,
+                enviarnos un mensaje usando el siguiente formulario y te contactaremos a la brevedad posible.
+            </p>
         </div>
 
         <div class="row">
@@ -34,18 +39,22 @@
             </div>
 
             <div class="col-lg-6">
-                <form wire:submit.prevent="sendMessage" {{--role="form"--}} class="php-email-form" {{--data-aos="fade-up"--}}>
+                <form wire:submit.prevent="sendMessage"
+                      {{--role="form"--}} class="php-email-form" {{--data-aos="fade-up"--}}>
                     <div class="form-group">
-                        <input wire:model.defer="nombre" placeholder="Su Nombre" type="text" class="form-control" required>
+                        <input wire:model.defer="nombre" placeholder="Su Nombre" type="text" class="form-control"
+                               required>
                     </div>
                     <div class="form-group mt-3">
-                        <input wire:model.defer="email" placeholder="Su Correo Electrónico" type="email" class="form-control" required>
+                        <input wire:model.defer="email" placeholder="Su Correo Electrónico" type="email"
+                               class="form-control" required>
                     </div>
                     <div class="form-group mt-3">
                         <input wire:model.defer="asunto" placeholder="Asunto" type="text" class="form-control" required>
                     </div>
                     <div class="form-group mt-3">
-                        <textarea wire:model.defer="mensaje" placeholder="Mensaje" class="form-control" rows="5" required></textarea>
+                        <textarea wire:model.defer="mensaje" placeholder="Mensaje" class="form-control" rows="5"
+                                  required></textarea>
                     </div>
                     {{--<div class="my-3">
                         <div class="loading">Loading</div>
@@ -55,7 +64,9 @@
                     <div class="my-3" wire:loading>
                         <i class='bx bx-refresh'></i> Cargando...
                     </div>
-                    <div class="text-center"><button type="submit">Enviar mensaje</button></div>
+                    <div class="text-center">
+                        <button type="submit">Enviar mensaje</button>
+                    </div>
                 </form>
             </div>
 
