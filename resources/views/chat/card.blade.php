@@ -24,7 +24,7 @@
                     <span class="direct-chat-timestamp float-right">{{ verFecha($chat['created_at'], 'd M h:i a') }}</span>
                 </div>
                 <!-- /.direct-chat-infos -->
-                <img class="direct-chat-img" src="{{ asset('img/logo.png') }}" alt="Message User Image">
+                <img class="direct-chat-img" src="{{ asset('img/preloader_171x171.png') }}" alt="Message User Image">
                 <!-- /.direct-chat-img -->
                 <div class="direct-chat-text">
                     Bienvenido a nuestro <span class="text-navy text-bold">Chat Directo</span>. este chat es

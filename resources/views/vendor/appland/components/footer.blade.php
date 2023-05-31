@@ -52,7 +52,7 @@
                 </div>
 
                 <div class="col-lg-3 col-md-6 footer-links">
-                    <h4>Nuestras Redes Sociales</h4>
+                    {{--<h4>Nuestras Redes Sociales</h4>
                     <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
                     <div class="social-links mt-3">
                         <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
@@ -60,7 +60,8 @@
                         <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
                         <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
                         <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-                    </div>
+                    </div>--}}
+                    <img src="{{ asset('img/logo_azul.png') }}" class="img-fluid rounded" alt="Logo Morros Devops">
                 </div>
 
             </div>
