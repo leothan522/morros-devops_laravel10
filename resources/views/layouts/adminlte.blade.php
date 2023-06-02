@@ -47,7 +47,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
     {{-- Preloader Animation --}}
-    @include('adminlte::partials.common.preloader')
+    {{--@if($layoutHelper->isPreloaderEnabled())
+        @include('adminlte::partials.common.preloader')
+    @endif--}}
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper pt-3">
