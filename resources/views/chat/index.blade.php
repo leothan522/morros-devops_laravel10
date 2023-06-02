@@ -56,6 +56,7 @@
             }
         });
 
+
         console.log('Hi!')
     </script>
 @endsection
