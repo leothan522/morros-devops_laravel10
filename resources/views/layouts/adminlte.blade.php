@@ -85,11 +85,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <body class="hold-transition layout-top-nav" style="background-color: rgb(244, 246, 249);">
 <div class="wrapper">
 
-
-    {{-- Preloader Animation --}}
-    {{--@if($layoutHelper->isPreloaderEnabled())
-        @include('adminlte::partials.common.preloader')
-    @endif--}}
     <div class="loader-section">
         {{--<span class="loader"></span>--}}
         <img src="{{ asset(config('adminlte.preloader.img.path', 'vendor/adminlte/dist/img/AdminLTELogo.png')) }}"
