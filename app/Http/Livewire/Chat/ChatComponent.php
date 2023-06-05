@@ -141,14 +141,16 @@ class ChatComponent extends Component
     {
         try {
             $this->messaging = FirebaseCloudMessagingService::connect();
-            $notificacion = Notification::fromArray([
-                'title' => "Chat: ".$title,
-                'body' => $body
-            ]);
+            $data = [
+                'title' => $title,
+                'body' => $body,
+                'subText' => 'Chat Directo',
+                'destino' => 1
+            ];
             $users = User::where('fcm_token', '!=', null)->get();
             foreach ($users as $user) {
                 $message = CloudMessage::withTarget('token', $user['fcm_token'])
-                    ->withNotification($notificacion);
+                    ->withData($data);
                 $this->messaging->send($message);
             }
         } catch (MessagingException|FirebaseException $e) {
