@@ -149,9 +149,11 @@ class ChatComponent extends Component
             ];
             $users = User::where('fcm_token', '!=', null)->get();
             foreach ($users as $user) {
-                $message = CloudMessage::withTarget('token', $user['fcm_token'])
-                    ->withData($data);
-                $this->messaging->send($message);
+                if ($user->id != Auth::id()){
+                    $message = CloudMessage::withTarget('token', $user['fcm_token'])
+                        ->withData($data);
+                    $this->messaging->send($message);
+                }
             }
         } catch (MessagingException|FirebaseException $e) {
             //mensaje en caso de error
