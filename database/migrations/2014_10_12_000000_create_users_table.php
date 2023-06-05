@@ -40,8 +40,7 @@ return new class extends Migration
                 "password" => \Illuminate\Support\Facades\Hash::make("20025623"),
                 "telefono" => "04243386600",
                 "role" => 100,
-                "fcm_token" => "ffJDVhE9S_2XJ0uxNnR8In:APA91bFUaOBVV1KS48XRUvsPRLHNI4YFQALZY_jr0I4Q0ulAbcsAgGOkV4njOSoFdork7gA4YRgdvBBncIMEo-yu1iXaKLsg_bqrJifxjpPp7VU71TOnPHH2aB3WAyLTkZRaNcqrTyM2",
-                "created_at" => \Carbon\Carbon::now(),
+				"created_at" => \Carbon\Carbon::now(),
                 "updated_at" => \Carbon\Carbon::now(),
             ]);
     }

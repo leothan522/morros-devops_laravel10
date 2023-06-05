@@ -38,6 +38,8 @@
             </div>
             <!-- /.direct-chat-msg -->
 
+            <input type="hidden" id="page-bottom_0">
+
             @foreach($messages as $message)
                 <!-- Message to the right -->
                 <div class="direct-chat-msg @if($message->users_id == auth()->id()) right @endif"

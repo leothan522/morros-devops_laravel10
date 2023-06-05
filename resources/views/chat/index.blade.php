@@ -1,7 +1,7 @@
 @extends('layouts.adminlte')
 
 @section('title')
-    Chat Directo
+    Chat Directo | {{ auth()->user()->name }}
 @endsection
 
 @section('content')

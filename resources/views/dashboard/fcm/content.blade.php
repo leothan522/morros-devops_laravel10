@@ -86,13 +86,14 @@
                                 @endif
                             </select>
 
-                            @error('fcm_token')
-                            <span class="col-sm-12 text-sm text-bold text-danger">
-                                <i class="icon fas fa-exclamation-triangle"></i>
-                                {{ $message }}
-                            </span>
-                            @enderror
+                            
                         </div>
+						@error('fcm_token')
+                            <span class="col-sm-12 text-sm text-bold text-danger">
+							<i class="icon fas fa-exclamation-triangle"></i>
+							{{ $message }}
+						</span>
+						@enderror
                     </div>
 
                     <div class="form-group">

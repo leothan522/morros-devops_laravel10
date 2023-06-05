@@ -2,7 +2,7 @@
 
 @section('plugins.Select2', true)
 
-@section('title', 'Dashboard')
+@section('title', 'Cloud Messaging (FCM)')
 
 @section('content_header')
     <h1><i class="fas fa-bell"></i> Firebase Cloud Messaging</h1>
