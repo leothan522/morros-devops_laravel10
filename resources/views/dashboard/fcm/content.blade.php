@@ -72,11 +72,12 @@
 
                     <div class="form-group">
                         <label for="name">FCM TOKEN</label>
-                        <div class="input-group mb-3">
+                        <div class="input-group mb-3" wire:ignore>
+
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-mobile-alt"></i></span>
                             </div>
-                            <select class="custom-select" wire:model="fcm_token">
+                            <select id="fcm_token_users">
                                 <option value="todos">Enviar a Todos</option>
                                 @if(!$listarUsers->isEmpty())
                                     @foreach($listarUsers as $user)
@@ -84,6 +85,7 @@
                                     @endforeach
                                 @endif
                             </select>
+
                             @error('fcm_token')
                             <span class="col-sm-12 text-sm text-bold text-danger">
                                 <i class="icon fas fa-exclamation-triangle"></i>

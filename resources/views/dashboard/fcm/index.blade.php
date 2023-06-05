@@ -1,5 +1,7 @@
 @extends('adminlte::page')
 
+@section('plugins.Select2', true)
+
 @section('title', 'Dashboard')
 
 @section('content_header')
@@ -36,6 +38,16 @@
             }
             return false;
         }
+
+        $('#fcm_token_users').select2({
+            theme: 'bootstrap4',
+            language: "es"
+        })
+
+        $('#fcm_token_users').on('change', function () {
+            let token = $(this).val();
+            Livewire.emit('tokenSeleccionado', token);
+        });
 
         console.log('Hi!');
     </script>

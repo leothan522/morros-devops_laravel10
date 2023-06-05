@@ -15,6 +15,10 @@ class FcmComponent extends Component
 {
     use LivewireAlert;
 
+    protected $listeners = [
+        'tokenSeleccionado'
+    ];
+
     public $title, $body, $fcm_token = "todos", $fcm_tipo;
     private $messaging;
 
@@ -96,6 +100,11 @@ class FcmComponent extends Component
         }
 
 
+    }
+
+    public function tokenSeleccionado($token)
+    {
+        $this->fcm_token = $token;
     }
 
 
