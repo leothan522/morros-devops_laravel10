@@ -7,7 +7,7 @@
                     <h1>@yield('hero_title', 'Página de destino de la aplicación')</h1>
                     <h2>@yield('hero_message', 'Lorem ipsum dolor sit amet, tota senserit percipitur ius ut, usu et fastidii forensibus voluptatibus. His ei nihil feugait')</h2>
 
-                    <a href="{{ asset('apk/MorrosDevopsChatDemo_v1.0.apk') }}" class="download-btn"><i class="bx bxl-android"></i> Descargar Demo Chat APK</a>
+                    <a href="{{ asset('apk/MorrosDevopsChatDemo_v1.0.1.apk') }}" class="download-btn"><i class="bx bxl-android"></i> Descargar Demo Chat APK</a>
 
                     {{--<a href="#" class="download-btn"><i class="bx bxl-play-store"></i> Google Play</a>
                     <a href="#" class="download-btn"><i class="bx bxl-apple"></i> App Store</a>--}}
