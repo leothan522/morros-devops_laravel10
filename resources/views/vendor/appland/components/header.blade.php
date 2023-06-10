@@ -33,6 +33,9 @@
                 </li>--}}
                 <li><a class="nav-link scrollto" href="#contact">Contacto</a></li>
                 @auth
+					@if(auth()->user()->role == 100)
+                        <li><a class="nav-link scrollto" href="../../android" target="_blank">API Android</a></li>
+                    @endif
                     @if(auth()->user()->role > 0)
                         <li><a class="nav-link scrollto" href="{{ route('dashboard') }}">Dashboard</a></li>
                     @endif
