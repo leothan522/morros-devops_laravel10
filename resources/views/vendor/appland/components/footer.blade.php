@@ -51,7 +51,7 @@
                     </ul>
                 </div>
 
-                <div class="col-lg-3 col-md-6 footer-links">
+                <div class="col-lg-3 col-md-6 footer-links p-0">
                     {{--<h4>Nuestras Redes Sociales</h4>
                     <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
                     <div class="social-links mt-3">
@@ -61,7 +61,7 @@
                         <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
                         <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
                     </div>--}}
-                    <img src="{{ asset('img/logo_azul.png') }}" class="img-fluid rounded" alt="Logo Morros Devops">
+                    <img src="{{ asset('img/logo.png') }}" class="img-fluid rounded" alt="Logo Morros Devops">
                 </div>
 
             </div>
