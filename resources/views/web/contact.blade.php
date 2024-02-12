@@ -40,18 +40,18 @@
             </div>
 
             <div class="col-lg-6">
-                <form wire:submit.prevent="sendMessage" {{--role="form"--}} class="php-email-form" {{--data-aos="fade-up"--}}>
+                <form wire:submit="sendMessage" {{--role="form"--}} class="php-email-form" {{--data-aos="fade-up"--}}>
                     <div class="form-group">
-                        <input wire:model.defer="nombre" placeholder="Su Nombre" type="text" class="form-control" required>
+                        <input wire:model="nombre" placeholder="Su Nombre" type="text" class="form-control" required>
                     </div>
                     <div class="form-group mt-3">
-                        <input wire:model.defer="email" placeholder="Su Correo Electrónico" type="email" class="form-control" required>
+                        <input wire:model="email" placeholder="Su Correo Electrónico" type="email" class="form-control" required>
                     </div>
                     <div class="form-group mt-3">
-                        <input wire:model.defer="asunto" placeholder="Asunto" type="text" class="form-control" required>
+                        <input wire:model="asunto" placeholder="Asunto" type="text" class="form-control" required>
                     </div>
                     <div class="form-group mt-3">
-                        <textarea wire:model.defer="mensaje" placeholder="Mensaje" class="form-control" rows="5" required></textarea>
+                        <textarea wire:model="mensaje" placeholder="Mensaje" class="form-control" rows="5" required></textarea>
                     </div>
                     {{--<div class="my-3">
                         <div class="loading">Loading</div>

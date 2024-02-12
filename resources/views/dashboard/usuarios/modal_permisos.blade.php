@@ -22,7 +22,9 @@
                     </div>
                 </div>
 
-                @include('dashboard.usuarios.show_permisos')
+                @if($usuarios_id)
+                    @include('dashboard.usuarios.show_permisos')
+                @endif
 
             </div>
             <div class="modal-footer row col-12 justify-content-between">
@@ -37,7 +39,7 @@
                 </button>
             </div>
 
-            <div class="overlay-wrapper" wire:loading wire:target="edit, savePermisos">
+            <div class="overlay-wrapper" wire:loading wire:target="edit, savePermisos, deletePermisos">
                 <div class="overlay">
                     <div class="spinner-border text-navy" role="status">
                         <span class="sr-only">Loading...</span>

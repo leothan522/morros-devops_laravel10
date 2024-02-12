@@ -42,10 +42,10 @@
         $("#from_role_usuario").submit(function(e) {
             e.preventDefault();
             let nombre = $('#input_role_nombre').val();
-            Livewire.emit('save', nombre);
+            Livewire.dispatch('save', { nombre: nombre });
         });
 
-        Livewire.on('addRolList', (id, nombre, rows) => {
+        Livewire.on('addRolList', ({ id, nombre, rows }) => {
             $('#input_role_nombre')
                 .val('')
                 .blur();
@@ -61,15 +61,15 @@
 
         function showRol(id){
             $('#div_ver_spinner_roles').removeClass('d-none');
-            Livewire.emit('edit', id);
+            Livewire.dispatch('edit', { id });
         }
 
-        Livewire.on('setRolList', (id, nombre) => {
+        Livewire.on('setRolList', ({ id, nombre }) => {
             $('#button_role_id_' + id).text(nombre);
         });
 
-        Livewire.on('removeRolList', id =>{
-            Livewire.emit('limpiar');
+        Livewire.on('removeRolList', ({ id }) =>{
+            Livewire.dispatch('limpiar');
             $('#button_role_id_' + id).addClass('d-none');
             $('#button_rol_modal_cerrar').click();
         });
