@@ -9,15 +9,12 @@ use Kreait\Firebase\Exception\FirebaseException;
 use Kreait\Firebase\Exception\MessagingException;
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class FcmComponent extends Component
 {
     use LivewireAlert;
-
-    protected $listeners = [
-        'tokenSeleccionado'
-    ];
 
     public $title, $body, $fcm_token = "todos", $fcm_tipo;
     private $messaging;
@@ -33,7 +30,6 @@ class FcmComponent extends Component
         'title' => 'required|min:4',
         'body' => 'required|min:4',
         'fcm_token' => 'required',
-        'fcm_tipo' => 'required',
     ];
 
     public function sendMessage()
@@ -98,14 +94,11 @@ class FcmComponent extends Component
                 'confirmButtonText' => 'OK',
             ]);
         }
-
-
     }
 
+    #[On('tokenSeleccionado')]
     public function tokenSeleccionado($token)
     {
         $this->fcm_token = $token;
     }
-
-
 }
