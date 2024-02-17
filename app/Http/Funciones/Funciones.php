@@ -2,10 +2,8 @@
 //Funciones Personalizadas para el Proyecto
 
 use App\Models\Parametro;
-//use App\Models\Producto;
-//use App\Models\Stock;
 use Carbon\Carbon;
-//use Intervention\Image\Facades\Image;
+use Intervention\Image\ImageManager;
 
 function hola(){
     return "Funciones Personalidas bien creada";
@@ -115,23 +113,42 @@ function verSpinner()
     return $spinner;
 }
 
-function verImagen($path, $user = false)
+function verImagen($path, $user = false, $web = null)
 {
     if (!is_null($path)){
-        if (file_exists(public_path('storage/'.$path))){
-            return asset('storage/'.$path);
-        }else{
-            if ($user){
+        if ($user){
+            if (file_exists(public_path('storage/'.$path))){
+                return asset('storage/'.$path);
+            }else{
                 return asset('img/user.png');
             }
-            return asset('img/image.png');
+        }else{
+            if (file_exists(public_path($path))){
+                return asset($path);
+            }else{
+                if (is_null($web)){
+                    return asset('img/img_placeholder.png');
+                }else{
+                    return asset('img/web_img_placeholder.jpg');
+                }
+
+            }
         }
     }else{
         if ($user){
             return asset('img/user.png');
         }
-        return asset('img/image.png');
+        if (is_null($web)){
+            return asset('img/img_placeholder.png');
+        }else{
+            return asset('img/web_img_placeholder.jpg');
+        }
     }
+}
+
+function verUtf8($string){
+    //$utf8_string = "Some UTF-8 encoded BATE QUEBRADO ÑñíÍÁÜ niño ó Ó string: é, ö, ü";
+    return mb_convert_encoding($string, 'UTF-8');
 }
 
 function iconoPlataforma($plataforma)
@@ -191,31 +208,15 @@ function verFecha($fecha, $format = null){
     return $carbon->parse($fecha)->format($format);
 }
 
-function numRowsPaginate(){
-    $default = 15;
-    $parametro = Parametro::where("nombre", "numRowsPaginate")->first();
-    if ($parametro) {
-        if (is_numeric($parametro->valor)) {
-            return $parametro->valor;
-        }
+function generarStringAleatorio($largo = 10, $espacio = false): string
+{
+    $caracteres = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $caracteres = $espacio ? $caracteres . ' ' : $caracteres;
+    $string = '';
+    for ($i = 0; $i < $largo; $i++) {
+        $string .= $caracteres[rand(0, strlen($caracteres) - 1)];
     }
-    return $default;
-}
-
-//-------------------------------------------------------------------------------------
-
-
-function cuantosDias($fecha_inicio, $fecha_final){
-
-    if ($fecha_inicio == null){
-        return 0;
-    }
-
-    $carbon = new Carbon();
-    $fechaEmision = $carbon->parse($fecha_inicio);
-    $fechaExpiracion = $carbon->parse($fecha_final);
-    $diasDiferencia = $fechaExpiracion->diffInDays($fechaEmision);
-    return $diasDiferencia;
+    return $string;
 }
 
 function diaEspanol($fecha){
@@ -231,7 +232,27 @@ function mesEspanol($numMes){
     return $mes;
 }
 
+function numRowsPaginate(){
+    $default = 15;
+    $parametro = Parametro::where("nombre", "numRowsPaginate")->first();
+    if ($parametro) {
+        if (is_numeric($parametro->valor)) {
+            return $parametro->valor;
+        }
+    }
+    return $default;
+}
 
+function numSizeCodigo(){
+    $default = 6;
+    $parametro = Parametro::where("nombre", "size_codigo")->first();
+    if ($parametro) {
+        if (is_numeric($parametro->tabla_id)) {
+            return $parametro->tabla_id;
+        }
+    }
+    return $default;
+}
 
 //funcion formato millares
 function formatoMillares($cantidad, $decimal = 2)
@@ -239,70 +260,90 @@ function formatoMillares($cantidad, $decimal = 2)
     return number_format($cantidad, $decimal, ',', '.');
 }
 
-//Ceros a la izquierda
-function cerosIzquierda($cantidad, $cantCeros = 2)
+function crearMiniaturas($imagen_data, $path_data)
 {
-    if ($cantidad == 0) {
-        return 0;
+    //ejemplo de path
+    //$miniatura = 'storage/productos/size_'.$nombreImagen;
+
+    //definir tamaños
+    $sizes = [
+        'mini' => [
+            'width' => 320,
+            'height' => 320,
+            'path' => str_replace('size_', 'mini_', $path_data)
+        ],
+        'detail' => [
+            'width' => 540,
+            'height' => 560,
+            'path' => str_replace('size_', 'detail_', $path_data)
+        ],
+        'cart' => [
+            'width' => 101,
+            'height' => 100,
+            'path' => str_replace('size_', 'cart_', $path_data)
+        ],
+        'banner' => [
+            'width' => 570,
+            'height' => 270,
+            'path' => str_replace('size_', 'banner_', $path_data)
+        ]
+    ];
+
+    $respuesta = array();
+
+    $image = ImageManager::gd()->read($imagen_data);
+    foreach ($sizes as $nombre => $items){
+        $width = null;
+        $height = null;
+        $path = null;
+        foreach ($items as $key => $valor){
+            if ($key == 'width') { $width = $valor; }
+            if ($key == 'height') { $height = $valor; }
+            if ($key == 'path') { $path = $valor; }
+        }
+        $respuesta[$nombre] = $path;
+        $image->resize($width, $height);
+        $image->save($path);
     }
-    return str_pad($cantidad, $cantCeros, "0", STR_PAD_LEFT);
+
+    return $respuesta;
+
 }
 
-//calculo de porcentaje
-function obtenerPorcentaje($cantidad, $total)
+//borrar imagenes incluyendo las miniaturas
+function borrarImagenes($imagen, $carpeta)
 {
-    if ($total != 0) {
-        $porcentaje = ((float)$cantidad * 100) / $total; // Regla de tres
-        $porcentaje = round($porcentaje, 2);  // Quitar los decimales
-        return $porcentaje;
-    }
-    return 0;
-}
+    if ($imagen){
+        //reenplazamos storage por public
+        $imagen = str_replace('storage/', 'public/', $imagen);
+        //definir tamaños
+        $sizes = [
+            'mini' => [
+                'path' => str_replace($carpeta.'/', $carpeta.'/mini_', $imagen)
+            ],
+            'detail' => [
+                'path' => str_replace($carpeta.'/', $carpeta.'/detail_', $imagen)
+            ],
+            'cart' => [
+                'path' => str_replace($carpeta.'/', $carpeta.'/cart_', $imagen)
+            ],
+            'banner' => [
+                'path' => str_replace($carpeta.'/', $carpeta.'/banner_', $imagen)
+            ]
+        ];
 
-//Estado de Tienda Abierto o Cerrada
-function estatusTienda($id, $boton = false)
-{
-    //$estatus = true;
-    $estatus_tienda = Parametro::where('nombre', 'estatus_tienda')->where('tabla_id', $id)->first();
-    if ($estatus_tienda){
-
-        $estatus = $estatus_tienda->valor;
-
-        if (!$boton){
-            if ($estatus == 1){
-                $horario = Parametro::where('nombre', 'horario')->where('tabla_id', $id)->first();
-                if ($horario && $horario->valor == 1){
-
-                    $hoy = date('D');
-                    $dia = Parametro::where('nombre', "horario_$hoy")->where('tabla_id', $id)->first();
-                    $apertura = Parametro::where('nombre', 'horario_apertura')->where('tabla_id', $id)->first();
-                    $cierre = Parametro::where('nombre', 'horario_cierre')->where('tabla_id', $id)->first();
-
-                    if ($dia && $dia->valor == 1){
-
-                        if($apertura && $cierre){
-
-                            $estatus = hourIsBetween($apertura->valor, $cierre->valor, date('H:i'));
-
-                        }else{
-                            $estatus = true;
-                        }
-
-                    }else{
-                        $estatus = false;
-                    }
-
-                }
-            }
-
+        $exite = Storage::exists($imagen);
+        if ($exite){
+            Storage::delete($imagen);
         }
 
-
-    }else{
-        $estatus = false;
+        foreach ($sizes as $items){
+            $exite = Storage::exists($items['path']);
+            if ($exite){
+                Storage::delete($items['path']);
+            }
+        }
     }
-
-    return $estatus;
 }
 
 //Función comprueba una hora entre un rango
@@ -317,162 +358,61 @@ Comprobaremos si la segunda hora que le pasamos es inferior a la primera, con lo
 Y al final devolveremos true o false dependiendo si el valor introducido se encuentra entre lo que le hemos pasado.*/
 }
 
-function empresaDefault($default)
+function dataSelect2($rows)
 {
-    if ($default){
-        return '<i class="fas fa-certificate text-muted text-xs"></i>';
+    $data = array();
+    foreach ($rows as $row){
+        $option = [
+            'id' => $row->id,
+            'text' => $row->codigo.'  '.$row->nombre
+        ];
+        array_push($data, $option);
+    }
+    return $data;
+}
+
+function array_sort_by($arrIni, $col, $order = SORT_ASC)
+{
+    $arrAux = array();
+    foreach ($arrIni as $key=> $row)
+    {
+        $arrAux[$key] = is_object($row) ? $arrAux[$key] = $row->$col : $row[$col];
+        $arrAux[$key] = strtolower($arrAux[$key]);
+    }
+    array_multisort($arrAux, $order, $arrIni);
+    return $arrIni;
+}
+
+function nextCodigo($next = 1, $parametros_nombre = null, $parametros_tabla_id = null, $formato = null){
+    $codigo = null;
+
+    //buscamos algun formato para el codigo
+    $parametro = Parametro::where("nombre", $parametros_nombre)->where('tabla_id', $parametros_tabla_id)->first();
+    if ($parametro) {
+        $codigo = $parametro->valor;
     }else{
-        return false;
-    }
-}
-
-function verImg($path, $banner = false)
-{
-    if ($banner){
-        $img = 'img/b_img_placeholder.png';
-    }else{
-        $img = 'img/img_placeholder.png';
-    }
-    if (!is_null($path)){
-        if (file_exists(public_path($path))){
-            $img = $path;
-        }
-    }
-    return $img;
-}
-
-/*function crearMiniaturas($data, $path, $width = 320, $height = 320)
-{
-    //$nombre = explode('logo/', $empresa->logo);
-    //$path = 'storage/logo/t_'.$nombre[1]
-    $img = Image::make($data);
-    $img->resize($width, $height);
-    $img->save($path);
-}*/
-
-/*function calcularIVA($id, $pvp, $iva = false, $label = false)
-{
-    $resultado = 0;
-    //puedes después cambiarlo a 16% si así lo requieres
-    $valor_iva = 16;
-    $monto_total = $pvp;
-    $precio_dolar = 0;
-
-    $dolar = Parametro::where('nombre', 'precio_dolar')->first();
-    if ($dolar){
-        $precio_dolar = $dolar->valor;
-    }
-
-    $parametro = Parametro::where('nombre', 'iva')->first();
-    if ($parametro){
-        $valor_iva = $parametro->valor;
-    }
-    if ($label){
-        return $valor_iva;
-    }
-
-
-    $producto = Producto::find($id);
-    //dd($id);
-    if ($producto && $producto->impuesto == 1){
-        if ($iva){
-            $resultado = ( $monto_total * ( $valor_iva / 100 ) );
-
+        if (is_null($formato)){
+            $codigo = "N".$parametros_tabla_id.'-';
         }else{
-            $resultado = ( $monto_total ) + ( $monto_total * ( $valor_iva / 100 ) );
-        }
-    }else{
-        if ($iva){
-            $resultado = 0;
-        }else{
-            $resultado = $monto_total;
+            $codigo = $formato;
         }
     }
 
+    if (!is_numeric($next)){ $next = 1; }
 
+    $size = cerosIzquierda($next, numSizeCodigo());
 
-    //En caso de que quieras redondear a dos decimales, te recomiendo usar la función number_format
-    $resultado = number_format($resultado, 2, '.', false);
-    return $resultado;
+    return $codigo . $size;
+
 }
 
-function calcularPrecio($id, $pvp, $iva = false, $label = false)
+//Ceros a la izquierda
+function cerosIzquierda($cantidad, $cantCeros = 2)
 {
-    $resultado = 0;
-    //puedes después cambiarlo a 16% si así lo requieres
-    $valor_iva = 16;
-    $monto_total = $pvp;
-    $precio_dolar = 1;
-
-    $dolar = Parametro::where('nombre', 'precio_dolar')->first();
-    if ($dolar){
-        if ($dolar->valor > 0){
-            $precio_dolar = $dolar->valor;
-        }
+    if ($cantidad == 0) {
+        return 0;
     }
-
-    $parametro = Parametro::where('nombre', 'iva')->first();
-    if ($parametro){
-        $valor_iva = $parametro->valor;
-    }
-    if ($label){
-        return $valor_iva;
-    }
-
-    $stock = Stock::find($id);
-    $moneda_empresa = $stock->empresa->moneda;
-    $moneda_stock = $stock->moneda;
-
-    $producto = Producto::find($stock->productos_id);
-    //dd($id);
-    if ($producto && $producto->impuesto == 1){
-        if ($iva){
-            $resultado = ( $monto_total * ( $valor_iva / 100 ) );
-            if ($moneda_stock == 'Bs.'){
-                $resultado = $resultado / $precio_dolar;
-            }
-        }else{
-            $resultado = ( $monto_total ) + ( $monto_total * ( $valor_iva / 100 ) );
-            if ($moneda_stock == 'Bs.'){
-                $resultado = $resultado / $precio_dolar;
-            }
-        }
-    }else{
-        if ($iva){
-            $resultado = 0;
-        }else{
-            $resultado = $monto_total;
-        }
-    }
-
-
-
-    //En caso de que quieras redondear a dos decimales, te recomiendo usar la función number_format
-    $resultado = number_format($resultado, 2, '.', false);
-    return $resultado;
-}
-
-function verIconoEstatusPedico($estatus)
-{
-    $status = [
-        '0' => '<i class="fas fa-exclamation-triangle text-warning"></i>',
-        '1' => '<i class="fas fa-money-check-alt text-info"></i>',
-        '2' => '<i class="fas fa-shipping-fast"></i>',
-        '3' => '<i class="fas fa-check-circle text-success"></i>',
-        '4' => '<i class="fas fa-exclamation-triangle text-danger"></i>'
-    ];
-    return $status[$estatus];
-}
-
-function verIconoMetodosPago($metodo)
-{
-    $status = [
-        'efectivo' => '<i class="fas fa-money-bill-wave"></i>',
-        'debito' => '<i class="far fa-credit-card"></i>',
-        'transferencia' => '<i class="fas fa-money-check"></i>',
-        'movil' => '<i class="fas fa-mobile-alt"></i>'
-    ];
-    return $status[$metodo];
+    return str_pad($cantidad, $cantCeros, "0", STR_PAD_LEFT);
 }
 
 function telefonoSoporte()
@@ -486,17 +426,38 @@ function telefonoSoporte()
     return $telefono;
 }
 
-function verTipoCategoria($categoria)
-{
-    $categorias = [
-        '0' => 'Productos',
-        '1' => 'Tiendas',
-    ];
+//-------------------------------------------------------------------------------------
 
-    if(array_key_exists($categoria, $categorias)){
-        return $categorias[$categoria];
-    }else{
-        return "NO DEFINIDA";
+function cuantosDias($fecha_inicio, $fecha_final){
+
+    if ($fecha_inicio == null){
+        return 0;
     }
 
+    $carbon = new Carbon();
+    $fechaEmision = $carbon->parse($fecha_inicio);
+    $fechaExpiracion = $carbon->parse($fecha_final);
+    $diasDiferencia = $fechaExpiracion->diffInDays($fechaEmision);
+    return $diasDiferencia;
+}
+
+//calculo de porcentaje
+function obtenerPorcentaje($cantidad, $total)
+{
+    if ($total != 0) {
+        $porcentaje = ((float)$cantidad * 100) / $total; // Regla de tres
+        $porcentaje = round($porcentaje, 2);  // Quitar los decimales
+        return $porcentaje;
+    }
+    return 0;
+}
+
+/*function empresaDefault($default)
+{
+    if ($default){
+        return '<i class="fas fa-certificate text-muted text-xs"></i>';
+    }else{
+        return false;
+    }
 }*/
+
